@@ -8,6 +8,7 @@
 
 import UIKit
 import Alamofire
+import SwiftyJSON
 
 class ViewController: UIViewController {
 
@@ -26,12 +27,40 @@ class ViewController: UIViewController {
                 print(json)
                 
                 
-                // Prints string value
+                // Prints firstkey string value
                 print(json["firstkey"] as! String)
                 
-                // Prints array value
+                // Prints secondkey array
                 print(json["secondkey"] as! NSArray)
                 
+            }
+        }
+        
+        
+        
+        // Working with SwiftyJSON
+        
+        Alamofire.request(url, method: .get).validate().responseJSON { (response) in
+            switch response.result{
+                
+                case .success(let value):
+                    let json = JSON(value)
+                   
+                    // Prints all JSON data
+                    print(json)
+                
+                    // Prints firstkey string value
+                    print(json["firstkey"])
+                
+                    // Prints secondkey array
+                    print(json["secondkey"])
+                
+                    // Prints secondkey array 1st element
+                    print(json["secondkey"][0])
+                
+                case .failure(let error):
+                    
+                    print(error)
             }
         }
     }
